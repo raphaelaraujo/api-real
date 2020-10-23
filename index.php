@@ -59,7 +59,7 @@ and open the template in the editor.
             foreach ($allEventTypes as $eventType) {
                 if ($eventType->eventType->name == 'Horse Racing') {
                     var_dump($eventType);
-                    return $eventType->eventType->id;
+                    return $eventType->eventType->name;
                 }
             }
         }
