@@ -80,11 +80,7 @@ and open the template in the editor.
 
             foreach ($jsonResponse[0]->result as $evento) {
 
-                if (isset($evento->event->countryCode) ) {
-                    
-                    
-                    
-                    
+                if (isset($evento->event->countryCode) ) {                                                                                
                     //echo $evento->event->name . "</br>";
                    // echo "<hr>";
                     
