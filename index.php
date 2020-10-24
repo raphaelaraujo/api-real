@@ -50,21 +50,60 @@ and open the template in the editor.
 
         function getAllEventTypes($appKey, $sessionToken) {
 
-            $jsonResponse = sportsApingRequest($appKey, $sessionToken, 'listEventTypes', '{"filter":{}}');
+            $jsonResponse = sportsApingRequest($appKey, $sessionToken, 'listEvents', '{"filter":{"eventTypeIds":[ "1"]}}');
 
-            return $jsonResponse[0]->result;
-        }
 
-        function extractHorseRacingEventTypeId($allEventTypes) {
-            foreach ($allEventTypes as $eventType) {
-                if ($eventType->eventType->name == 'Horse Racing') {
-                    var_dump($eventType);
-                    return $eventType->eventType->name;
+//            object(stdClass)#1 (3) {
+//  ["jsonrpc"]=>
+//  string(3) "2.0"
+//  ["result"]=>
+//  array(859) {
+//    [0]=>
+//    object(stdClass)#3 (2) {
+//      ["event"]=>
+//      object(stdClass)#2 (5) {
+//        ["id"]=>
+//        string(8) "30073291"
+//        ["name"]=>
+//        string(17) "Annan v Stranraer"
+//        ["countryCode"]=>
+//        string(2) "GB"
+//        ["timezone"]=>
+//        string(3) "GMT"
+//        ["openDate"]=>
+//        string(24) "2020-10-24T14:00:00.000Z"
+//      }
+//      ["marketCount"]=>
+//      int(24)
+//    }
+            //
+
+            foreach ($jsonResponse[0]->result as $evento) {
+
+                if (isset($evento->event->countryCode) ) {
+                    //echo $evento->event->name . "</br>";
+                   // echo "<hr>";
+                    
+                    var_dump($evento);
                 }
+
+
+                // var_dump($evento);
             }
+
+            //return $jsonResponse[0]->result;
         }
-        
-        echo extractHorseRacingEventTypeId(getAllEventTypes($appKey, $sessionToken));
+
+//        function extractHorseRacingEventTypeId($allEventTypes) {
+//            foreach ($allEventTypes as $eventType) {
+//                if ($eventType->event->countryCode == 'BR') {
+//                    var_dump($eventType);
+//                    return $eventType->event->name;
+//                }
+//            }
+//        }
+        //echo extractHorseRacingEventTypeId(getAllEventTypes($appKey, $sessionToken));
+        echo getAllEventTypes($appKey, $sessionToken);
         ?>
     </body>
 </html>
