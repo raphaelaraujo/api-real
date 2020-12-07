@@ -34,7 +34,7 @@ and open the template in the editor.
 
         $operationMarket = "listMarketCatalogue";
         $paramsMarket = '{"filter" : {
-                                    "eventIds" : ["30160414"],
+                                    "eventIds" : ["30171548"],
                                     "marketCountries": ["BR"],
                                     "marketTypeCodes": ["MATCH_ODDS"]
                                      },
@@ -62,7 +62,7 @@ and open the template in the editor.
             'Content-Type: application/json'
         ));
 
-        $postData = '[{ "jsonrpc": "2.0", "method": "SportsAPING/v1.0/' . $operationCompetition . '", "params" :' . $paramsCompetition . ', "id": 1}]';
+        $postData = '[{ "jsonrpc": "2.0", "method": "SportsAPING/v1.0/' . $operationMarket . '", "params" :' . $paramsMarket . ', "id": 1}]';
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
 

@@ -72,9 +72,11 @@ class Core_model extends CI_Model {
         if ($table && $this->db->table_exists($table) && is_array($condition)) {
 
             if ($this->db->delete($table, $condition)) {
-                $this->session->set_flashdata('success', 'Registro excluido com sucesso!');
+                echo 'deletado com sucesso';
+                //$this->session->set_flashdata('success', 'Registro excluido com sucesso!');
             } else {
-                $this->session->set_flashdata('error', 'Não foi possivel excluir o registro');
+                echo 'erro no delete';
+                //$this->session->set_flashdata('error', 'Não foi possivel excluir o registro');
             }
         } else {
             return false;
