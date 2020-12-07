@@ -1,14 +1,16 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Api_acao extends CI_Controller {
+class Api_acao extends CI_Controller
+{
 
-    public function index() {
-        $this->load->view('welcome_message');
+    public function index()
+    {
     }
 
-    public function core_competicao() {
+    public function core_competicao()
+    {
 
         $operacao = "listCompetitions";
         $parametro = '{"filter" : {
@@ -31,11 +33,12 @@ class Api_acao extends CI_Controller {
                 $data['data_cadastro'] = date('Y-m-d H:i:s');
 
                 $this->core_model->insert('competicoes', $data);
-            }//fim do if
+            } //fim do if
         }
     }
 
-    public function core_evento() {
+    public function core_evento()
+    {
 
         $lista_competicao = $this->core_model->get_all('competicoes');
 
@@ -72,11 +75,26 @@ class Api_acao extends CI_Controller {
         }
     }
 
-    public function core_mercado() {
-
+    public function core_mercado()
+    {
+        //Competição
+        $lista_competicao = $this->core_model->get_all('competicoes');
+        //Jogo
         $lista_evento = $this->core_model->get_all('eventos');
+        
+        
 
-        foreach ($lista_evento as $evento) {
+        //regra
+
+        $data = array(
+
+            'jogo' => $lista_evento,
+            'competicao' => $lista_competicao, 
+        );
+
+        $this->load->view('bet/index', $data);
+
+        /* foreach ($lista_evento as $evento) {
 
             $competicao_obj = $this->core_model->get_by_id('competicoes', array('id' => $evento->id_competicao));
             $evento_obj = $this->core_model->get_by_id('eventos', array('id' => $evento->id));
@@ -93,6 +111,9 @@ class Api_acao extends CI_Controller {
                     }';
 
             $resposta = $this->api_model->executa_api($operacao, $parametro);
+            // ---------------------------------
+
+            //ID do mercado => 1.457854
             foreach ($resposta[0]->result as $mercado) {
                 $operacaoBook = "listMarketBook";
                 $parametroBook = '{
@@ -104,19 +125,22 @@ class Api_acao extends CI_Controller {
 
                 var_dump($respostaBook);
 
-//                foreach ($respostaBook[0]->result as $mercadoBook) {
-//                    $data['id'] = $mercado->marketId;
-//                    $data['id_competicao_mercado'] = $evento->id_competicao;
-//                    $data['id_evento_mercado'] = $evento->id;
-//                    $data['mandante_mercado'] = $mercadoBook->runners[0]->lastPriceTraded;
-//                    $data['visitante_mercado'] = $mercadoBook->runners[1]->lastPriceTraded;
-//                    $data['empate_mercado'] = $mercadoBook->runners[2]->lastPriceTraded;
-//                    $data['data_cadastro_mercado'] = date('Y-m-d H:i:s');
-//
-//                    $this->core_model->insert('mercado', $data);
-//                }
-            }
-        }
-    }
+                foreach ($respostaBook[0]->result as $mercadoBook) {
+                    $data['id'] = $mercado->marketId;
+                    $data['id_competicao_mercado'] = $evento->id_competicao;
+                    $data['id_evento_mercado'] = $evento->id;
+                    $data['mandante_mercado'] = $mercadoBook->runners[0]->lastPriceTraded;
+                    $data['visitante_mercado'] = $mercadoBook->runners[1]->lastPriceTraded;
+                    $data['empate_mercado'] = $mercadoBook->runners[2]->lastPriceTraded;
+                    $data['data_cadastro_mercado'] = date('Y-m-d H:i:s');
 
+                    
+                }
+            }
+        } */
+
+        //aqui
+        
+    }
 }
+
