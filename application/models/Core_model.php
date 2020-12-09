@@ -17,6 +17,18 @@ class Core_model extends CI_Model {
         }
     }
 
+    public function get_all_join() {
+        $this->db->select('*');
+        $this->db->from('competicoes');
+        $this->db->where('EXISTS (select * from `eventos` WHERE `competicoes`.`id` = `eventos`.`id_competicao` and `eventos`.`data_cadastro_evento` >= CURDATE())');
+
+        return $this->db->get()->result();
+    }
+
+    public function delete_registros($table) {
+        $this->db->empty_table($table);
+    }
+
     public function get_by_id($table = null, $condition = null) {
 
         if ($table && $this->db->table_exists($table) && is_array($condition)) {
@@ -45,8 +57,8 @@ class Core_model extends CI_Model {
                 echo 'inserido com sucesso';
                 //$this->session->set_flashdata('success', 'Dados salvos com sucesso!');
             } else {
-               echo 'erro na inserção'; 
-               //$this->session->set_flashdata('error', 'Não foi possivel salvar os dados');
+                echo 'erro na inserção';
+                //$this->session->set_flashdata('error', 'Não foi possivel salvar os dados');
             }
         } else {
             return false;

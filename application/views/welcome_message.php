@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         <?php
         $appKey = "ps7eHG6ouYq6Nc7l";
-        $sessionToken = "8X0+Sye9YuXmiiT+xtLtIqoM5bflwKlK+mjhA0OzS50=";
+        $sessionToken = "7mnqju8A6HglJqsU3Y0heGzqqb1o2QJ83Npjc4t2YhY=";
         $url = "https://api.betfair.com/exchange/betting/json-rpc/v1";
 
         $operationCompetition = "listCompetitions";
@@ -27,7 +27,7 @@ and open the template in the editor.
         $paramsEvent = '{"filter" : {
                                     "eventTypeIds" : ["1"],
                                     "marketCountries": ["BR"],
-                                    "competitionIds":["3583988","",""]
+                                    "competitionIds":["12184232,3583988,321319,12148223,12185075,13,1223583"]
                                     },
                          "locale" : "pt"      
                     }';
@@ -62,7 +62,7 @@ and open the template in the editor.
             'Content-Type: application/json'
         ));
 
-        $postData = '[{ "jsonrpc": "2.0", "method": "SportsAPING/v1.0/' . $operationMarket . '", "params" :' . $paramsMarket . ', "id": 1}]';
+        $postData = '[{ "jsonrpc": "2.0", "method": "SportsAPING/v1.0/' . $operationEvent . '", "params" :' . $paramsEvent . ', "id": 1}]';
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
 
