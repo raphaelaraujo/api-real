@@ -54,10 +54,10 @@ class Core_model extends CI_Model {
             }
 
             if ($this->db->affected_rows() > 0) {
-                echo 'inserido com sucesso';
+                //echo 'inserido com sucesso';
                 //$this->session->set_flashdata('success', 'Dados salvos com sucesso!');
             } else {
-                echo 'erro na inserção';
+                //echo 'erro na inserção';
                 //$this->session->set_flashdata('error', 'Não foi possivel salvar os dados');
             }
         } else {
@@ -84,10 +84,10 @@ class Core_model extends CI_Model {
         if ($table && $this->db->table_exists($table) && is_array($condition)) {
 
             if ($this->db->delete($table, $condition)) {
-                echo 'deletado com sucesso';
+                //echo 'deletado com sucesso';
                 //$this->session->set_flashdata('success', 'Registro excluido com sucesso!');
             } else {
-                echo 'erro no delete';
+                //echo 'erro no delete';
                 //$this->session->set_flashdata('error', 'Não foi possivel excluir o registro');
             }
         } else {

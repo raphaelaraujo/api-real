@@ -83,6 +83,7 @@ class Api_acao extends CI_Controller {
     public function core_mercado() {
 
         $lista_evento = $this->core_model->get_all('eventos');
+        $lista_competicao = $this->core_model->get_all('competicoes');
 
         $id_evento_tratado = "";
 
@@ -100,81 +101,64 @@ class Api_acao extends CI_Controller {
 
         $operacao = "listMarketCatalogue";
         $parametro = '{"filter" : {
-                                       "eventIds" : [' . $id_evento_tratado . '"],
-                                       "marketCountries": ["BR"],
-                                       "marketTypeCodes": ["MATCH_ODDS"]
-                                      },
+                                            "eventIds" : [' . $id_evento_tratado . '"],
+                                            "marketCountries": ["BR"],
+                                            "marketTypeCodes": ["MATCH_ODDS"]
+                                         },
                                 "maxResults" : 1000,
                                 "marketProjection": [
-                                                     "COMPETITION",
-                                                     "EVENT"
-                                                    ],
+                                                            "COMPETITION",
+                                                            "EVENT"
+                                                          ],
                                 "locale" : "pt"
           }';
 
         $resposta = $this->api_model->executa_api($operacao, $parametro);
 
+        foreach ($resposta[0]->result as $mercado) {
+            $operacaoBook = "listMarketBook";
+            $parametroBook = '{
+                                        "marketIds" : ["' . $mercado->marketId . '"],
+                                        "locale" : "pt"
+                                      }';
 
-        var_dump($resposta);
+            $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
 
-        exit();
-
-
-
-
-
-
-
-
-
-
-        foreach ($lista_evento as $evento) {
-
-            $operacao = "listMarketCatalogue";
-            $parametro = '{"filter" : {
-                                       "eventIds" : ["' . $evento->id . '"],
-                                       "marketCountries": ["BR"],
-                                       "marketTypeCodes": ["MATCH_ODDS"]
-                                      },
-                                "maxResults" : 1,
-                                "marketProjection": [
-                                                     "COMPETITION",
-                                                     "EVENT"]
-                                                    ]
-                                "locale" : "pt"
-          }';
-
-            $resposta = $this->api_model->executa_api($operacao, $parametro);
-
-            foreach ($resposta[0]->result as $mercado) {
-                $operacaoBook = "listMarketBook";
-                $parametroBook = '{
-                                   "marketIds" : ["' . $mercado->marketId . '"],
-                                   "locale" : "pt"
-                                  }';
-
-                $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
-
-                foreach ($respostaBook[0]->result as $mercadoBook) {
-                    $data_market[] = array(
-                        'competicao' => $evento->id_competicao,
-                        'evento_id' => $evento->id,
-                        'evento_nome' => $evento->nome_evento,
-                        'evento_data' => $evento->data_evento,
-                        'mandante' => isset($mercadoBook->runners[0]->lastPriceTraded) ? $mercadoBook->runners[0]->lastPriceTraded : '0.0',
-                        'visitante' => isset($mercadoBook->runners[1]->lastPriceTraded) ? $mercadoBook->runners[1]->lastPriceTraded : '0.0',
-                        'empate' => isset($mercadoBook->runners[2]->lastPriceTraded) ? $mercadoBook->runners[2]->lastPriceTraded : '0.0'
-                    );
-                }
+            foreach ($respostaBook[0]->result as $mercadoBook) {
+                $data_market[] = array(
+                    'competicao' => $mercado->competition->id,
+                    'evento_id' => $mercado->event->id,
+                    'evento_nome' => $mercado->event->name,
+                    //'evento_data' => $mercado->event->openDate,
+                    'evento_data' => date("d/m/Y H:i:s", strtotime($mercado->event->openDate)),
+                    //'evento_data' => $this->format_date($mercado->event->openDate),
+                    'mandante' => isset($mercadoBook->runners[0]->lastPriceTraded) ? $mercadoBook->runners[0]->lastPriceTraded : '0.0',
+                    'visitante' => isset($mercadoBook->runners[1]->lastPriceTraded) ? $mercadoBook->runners[1]->lastPriceTraded : '0.0',
+                    'empate' => isset($mercadoBook->runners[2]->lastPriceTraded) ? $mercadoBook->runners[2]->lastPriceTraded : '0.0'
+                );
             }
         }
+
 
         $data = array(
             'mercado' => $data_market,
             'competicao' => $lista_competicao,
         );
 
-        $this->load->view('bet/index', $data);
+        $this->load->view('bet/index_layout', $data);
+        //$this->load->view('bet/index', $data);
+    }
+
+    public function core_geral() {
+
+        $this->core_competicao();
+        $this->core_evento();
+        $this->core_mercado();
+    }
+
+    public function format_date($data_entrada) {
+        $data = $data_entrada;
+        return $data->format('d-m-Y H:i:s');
     }
 
 }
