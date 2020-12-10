@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 07-Dez-2020 às 16:20
+-- Generation Time: 10-Dez-2020 às 15:08
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.2
 
@@ -41,11 +41,9 @@ CREATE TABLE `competicoes` (
 --
 
 INSERT INTO `competicoes` (`id`, `nome`, `regiao`, `market_count`, `data_cadastro`) VALUES
-('321319', 'Brasil - Série B', 'BRA', 241, '2020-12-07 12:58:12'),
-('12148223', 'Brasil - Sub20', 'BRA', 38, '2020-12-07 12:58:12'),
-('13', 'Brasil - Serie A', 'BRA', 65, '2020-12-07 12:58:12'),
-('12181991', 'Brasil - Catarinense ', 'BRA', 95, '2020-12-07 12:58:12'),
-('7980087', 'Brasil - Série D', 'BRA', 19, '2020-12-07 12:58:12');
+('321319', 'Brasil - Série B', 'BRA', 10, '2020-12-10 14:56:57'),
+('12148223', 'Brasil - Sub20', 'BRA', 8, '2020-12-10 14:56:57'),
+('12009917', 'Brasil - Feminino', 'BRA', 2, '2020-12-10 14:56:57');
 
 -- --------------------------------------------------------
 
@@ -55,7 +53,6 @@ INSERT INTO `competicoes` (`id`, `nome`, `regiao`, `market_count`, `data_cadastr
 
 CREATE TABLE `eventos` (
   `id` varchar(255) NOT NULL,
-  `id_competicao` varchar(255) NOT NULL,
   `nome_evento` varchar(512) NOT NULL,
   `pais_evento` varchar(6) NOT NULL,
   `timezone_evento` varchar(24) NOT NULL,
@@ -68,25 +65,17 @@ CREATE TABLE `eventos` (
 -- Extraindo dados da tabela `eventos`
 --
 
-INSERT INTO `eventos` (`id`, `id_competicao`, `nome_evento`, `pais_evento`, `timezone_evento`, `data_evento`, `market_count_evento`, `data_cadastro_evento`) VALUES
-('30171548', '321319', 'Avaí x Chapecoense', 'BR', 'GMT', '2020-12-09T00:30:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171549', '321319', 'CRB x Cruzeiro MG', 'BR', 'GMT', '2020-12-09T00:30:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171550', '321319', 'Cuiaba x EC Vitoria Salvador', 'BR', 'GMT', '2020-12-09T00:30:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171547', '321319', 'Confianca x CSA', 'BR', 'GMT', '2020-12-09T00:30:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171524', '321319', 'Botafogo SP x Ponte Preta', 'BR', 'GMT', '2020-12-08T22:15:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171525', '321319', 'Guaraní x Operario PR', 'BR', 'GMT', '2020-12-08T19:30:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171526', '321319', 'Juventude x Oeste', 'BR', 'GMT', '2020-12-08T19:00:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171523', '321319', 'América-MG x Sampaio Correa FC', 'BR', 'GMT', '2020-12-08T22:15:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171228', '12148223', 'Atlético-MG Sub20 x Fluminense Sub20', 'BR', 'GMT', '2020-12-07T18:45:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171224', '12148223', 'Chapecoense Sub20 x Atlético Paranaense Sub20', 'BR', 'GMT', '2020-12-07T18:30:00.000Z', 2, '2020-12-07 15:12:27'),
-('30171562', '13', 'São Paulo x Botafogo', 'BR', 'GMT', '2020-12-10T00:30:00.000Z', 2, '2020-12-07 15:12:28'),
-('30167328', '13', 'Atlético-GO x Goiás', 'BR', 'GMT', '2020-12-07T23:00:00.000Z', 2, '2020-12-07 15:12:28'),
-('30171160', '12181991', 'Metropolitano SC v Barra FC Porto Alegre', 'BR', 'GMT', '2020-12-07T18:00:00.000Z', 2, '2020-12-07 15:12:29'),
-('30171161', '12181991', 'Esporte Clube Prospera v Camboriu', 'BR', 'GMT', '2020-12-07T18:00:00.000Z', 2, '2020-12-07 15:12:29'),
-('30171162', '12181991', 'Cacador AC x Hercilio Luz', 'BR', 'GMT', '2020-12-07T18:00:00.000Z', 2, '2020-12-07 15:12:29'),
-('30171179', '12181991', 'Guarani de Palhoca v Internacional de Lages SC', 'BR', 'GMT', '2020-12-07T18:00:00.000Z', 2, '2020-12-07 15:12:29'),
-('30171206', '12181991', 'Fluminense de Joinville v Navegantes Esporte Clube', 'BR', 'GMT', '2020-12-07T18:00:00.000Z', 2, '2020-12-07 15:12:29'),
-('30171262', '7980087', 'Rio Branco-Acre x Altos', 'BR', 'GMT', '2020-12-07T21:00:00.000Z', 2, '2020-12-07 15:12:29');
+INSERT INTO `eventos` (`id`, `nome_evento`, `pais_evento`, `timezone_evento`, `data_evento`, `market_count_evento`, `data_cadastro_evento`) VALUES
+('30177740', 'Corinthians (F) x Palmeiras (F)', 'BR', 'GMT', '2020-12-10T19:00:00.000Z', 2, '2020-12-10 14:56:58'),
+('30178924', 'Corinthians Sub20 x Taubate U20', 'BR', 'GMT', '2020-12-11T18:00:00.000Z', 2, '2020-12-10 14:56:58'),
+('30178701', 'Audax U20 v Comercial FC U20', 'BR', 'GMT', '2020-12-11T18:00:00.000Z', 2, '2020-12-10 14:56:58'),
+('30178702', 'Sao Bernardo U20 x Palmeiras Sub20', 'BR', 'GMT', '2020-12-11T18:00:00.000Z', 2, '2020-12-10 14:56:58'),
+('30178009', 'Ponte Preta x Avaí', 'BR', 'GMT', '2020-12-11T22:15:00.000Z', 2, '2020-12-10 14:56:58'),
+('30177994', 'EC Vitoria Salvador x Cruzeiro MG', 'BR', 'GMT', '2020-12-12T00:30:00.000Z', 2, '2020-12-10 14:56:58'),
+('30178805', 'Ferroviaria DE U20 x Santos Sub20', 'BR', 'GMT', '2020-12-11T18:00:00.000Z', 2, '2020-12-10 14:56:58'),
+('30177990', 'CSA x Oeste', 'BR', 'GMT', '2020-12-11T22:15:00.000Z', 2, '2020-12-10 14:56:58'),
+('30177991', 'Nautico PE v Brasil de Pelotas', 'BR', 'GMT', '2020-12-11T00:30:00.000Z', 2, '2020-12-10 14:56:58'),
+('30178007', 'Operario PR x Sampaio Correa FC', 'BR', 'GMT', '2020-12-11T19:00:00.000Z', 2, '2020-12-10 14:56:58');
 
 -- --------------------------------------------------------
 
@@ -95,14 +84,30 @@ INSERT INTO `eventos` (`id`, `id_competicao`, `nome_evento`, `pais_evento`, `tim
 --
 
 CREATE TABLE `mercado` (
-  `id` varchar(11) NOT NULL,
-  `id_competicao_mercado` varchar(40) NOT NULL,
-  `id_evento_mercado` varchar(40) NOT NULL,
-  `mandante_mercado` float NOT NULL,
-  `visitante_mercado` float NOT NULL,
-  `empate_mercado` float NOT NULL,
-  `data_cadastro_mercado` datetime NOT NULL
+  `mercado_id` varchar(11) NOT NULL,
+  `competicao_id` varchar(8) NOT NULL,
+  `evento_id` varchar(8) NOT NULL,
+  `evento_nome` varchar(512) NOT NULL,
+  `codigo_pais` varchar(3) NOT NULL,
+  `timezone` varchar(3) NOT NULL,
+  `evento_data` varchar(24) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mercado`
+--
+
+INSERT INTO `mercado` (`mercado_id`, `competicao_id`, `evento_id`, `evento_nome`, `codigo_pais`, `timezone`, `evento_data`) VALUES
+('1.176673670', '12009917', '30177740', 'Corinthians (F) x Palmeiras (F)', 'BR', 'GMT', '10/12/2020 20:00:00'),
+('1.176669149', '321319', '30177991', 'Nautico PE v Brasil de Pelotas', 'BR', 'GMT', '11/12/2020 01:30:00'),
+('1.176685749', '12148223', '30178805', 'Ferroviaria DE U20 x Santos Sub20', 'BR', 'GMT', '11/12/2020 19:00:00'),
+('1.176685919', '12148223', '30178701', 'Audax U20 v Comercial FC U20', 'BR', 'GMT', '11/12/2020 19:00:00'),
+('1.176685834', '12148223', '30178702', 'Sao Bernardo U20 x Palmeiras Sub20', 'BR', 'GMT', '11/12/2020 19:00:00'),
+('1.176685662', '12148223', '30178924', 'Corinthians Sub20 x Taubate U20', 'BR', 'GMT', '11/12/2020 19:00:00'),
+('1.176668923', '321319', '30178007', 'Operario PR x Sampaio Correa FC', 'BR', 'GMT', '11/12/2020 20:00:00'),
+('1.176669256', '321319', '30177990', 'CSA x Oeste', 'BR', 'GMT', '11/12/2020 23:15:00'),
+('1.176668816', '321319', '30178009', 'Ponte Preta x Avaí', 'BR', 'GMT', '11/12/2020 23:15:00'),
+('1.176669040', '321319', '30177994', 'EC Vitoria Salvador v Cruzeiro MG', 'BR', 'GMT', '12/12/2020 01:30:00');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
