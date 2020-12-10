@@ -39,32 +39,48 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Jogo</th>
-                                                                    <th>Data</th>
-                                                                    <th>Mandante</th>
-                                                                    <th>Visitante</th>
-                                                                    <th>Empate</th>
+                                                                    <th>Data</th> 
+                                                                    <th style="text-align:center">Apostas</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <?php foreach ($mercado as $m) : ?>                                
-                                                                    <?php if ($m['competicao'] == $c->id) : ?>
+                                                                    <?php if ($m->competicao_id == $c->id) : ?>
                                                                         <tr>
                                                                             <td>
-                                                                                <?php echo ($m['evento_nome']) ?>                                                    
+                                                                                <?php echo ($m->evento_nome) ?>                                                    
                                                                             </td>
                                                                             <td>
-                                                                                <?php echo ($m['evento_data']) ?>                                        
+                                                                                <?php echo ($m->evento_data) ?>                                        
                                                                             </td>
                                                                             <td>
-                                                                                <?php echo ($m['mandante']) ?>                                        
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo ($m['visitante']) ?>                                               
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo ($m['empate']) ?>                                               
-                                                                            </td>
-
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                        <tr style="text-align:center">
+                                                                                            <th>mandante</th>
+                                                                                            <th>visitante</th>
+                                                                                            <th>empate</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <?php foreach ($book as $b) : ?>
+                                                                                            <?php if ($m->mercado_id == $b['book_id']) : ?>
+                                                                                                <tr style="text-align:center">
+                                                                                                    <td>
+                                                                                                        <?php echo ($b['mandante']) ?>                                               
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <?php echo ($b['visitante']) ?>                                               
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <?php echo ($b['empate']) ?>                                               
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            <?php endif; ?>
+                                                                                        <?php endforeach; ?>
+                                                                                    </tbody>
+                                                                                </table>                                                                     
+                                                                            </td>                                                                            
                                                                         </tr>
                                                                     <?php endif; ?>
                                                                 <?php endforeach; ?>
