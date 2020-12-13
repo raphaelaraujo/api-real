@@ -24,8 +24,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h4>Basic DataTables</h4>
+                            <div class="card-header">  
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -34,13 +33,14 @@
                                             <?php foreach ($competicao as $c) : ?> 
                                                 <tr>                
                                                     <td>
-                                                        <?php echo ('Campeonato: ' . $c->nome) ?>
+                                                        <b>Campeonato:  </b><?php echo ($c->nome) ?>
                                                         <table class="table table-striped">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Jogo</th>
                                                                     <th>Data</th> 
-                                                                    <th style="text-align:center">Apostas</th>
+                                                                    <th style="text-align:center">Odds (A favor)</th>
+                                                                    <th style="text-align:center">Odds (Contra)</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -53,6 +53,8 @@
                                                                             <td>
                                                                                 <?php echo ($m->evento_data) ?>                                        
                                                                             </td>
+                                                                            
+<!-------------------------------------------------------------------ODDS A FAVOR------------------------------------------------------------->                                                                                                                                                        
                                                                             <td>
                                                                                 <table class="table table-striped">
                                                                                     <thead>
@@ -67,20 +69,55 @@
                                                                                             <?php if ($m->mercado_id == $b['book_id']) : ?>
                                                                                                 <tr style="text-align:center">
                                                                                                     <td>
-                                                                                                        <?php echo ($b['mandante']) ?>                                               
+                                                                                                        <?php echo ($b['mandante_afavor']) ?>                                               
                                                                                                     </td>
                                                                                                     <td>
-                                                                                                        <?php echo ($b['visitante']) ?>                                               
+                                                                                                        <?php echo ($b['visitante_afavor']) ?>                                               
                                                                                                     </td>
                                                                                                     <td>
-                                                                                                        <?php echo ($b['empate']) ?>                                               
+                                                                                                        <?php echo ($b['empate_afavor']) ?>                                               
                                                                                                     </td>
                                                                                                 </tr>
                                                                                             <?php endif; ?>
                                                                                         <?php endforeach; ?>
                                                                                     </tbody>
                                                                                 </table>                                                                     
-                                                                            </td>                                                                            
+                                                                            </td>   
+                                                                                                                                                                                                                                                                                                                
+<!-------------------------------------------------------------------ODDS CONTRA-------------------------------------------------------------->                                                                                                                                                        
+                                                                            <td>
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                        <tr style="text-align:center">
+                                                                                            <th>mandante</th>
+                                                                                            <th>visitante</th>
+                                                                                            <th>empate</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <?php foreach ($book as $b) : ?>
+                                                                                            <?php if ($m->mercado_id == $b['book_id']) : ?>
+                                                                                                <tr style="text-align:center">
+                                                                                                    <td>
+                                                                                                        <?php echo ($b['mandante_contra']) ?>                                               
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <?php echo ($b['visitante_contra']) ?>                                               
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <?php echo ($b['empate_contra']) ?>                                               
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            <?php endif; ?>
+                                                                                        <?php endforeach; ?>
+                                                                                    </tbody>
+                                                                                </table>                                                                     
+                                                                            </td> 
+
+
+
+
+
                                                                         </tr>
                                                                     <?php endif; ?>
                                                                 <?php endforeach; ?>

@@ -127,8 +127,12 @@ class Api_acao_1 extends CI_Controller {
     }
 
     public function core_odds() {
-        $lista_competicao = $this->core_model->get_all('competicoes');
-        $lista_mercado = $this->core_model->get_all('mercado');
+
+        //$lista_competicao = $this->core_model->get_all('competicoes');
+        //$lista_mercado = $this->core_model->get_all('mercado');
+
+        $lista_competicao = $this->core_model->get_all('competicoes', array('id' => '13'));
+        $lista_mercado = $this->core_model->get_all('mercado', array('competicao_id' => '13'));
 
         $id_mercado_tratado = "";
 
@@ -146,18 +150,44 @@ class Api_acao_1 extends CI_Controller {
         $operacaoBook = "listMarketBook";
         $parametroBook = '{
                            "marketIds" : [' . $id_mercado_tratado . '"],
+                           "priceProjection": {
+                                                     "priceData": ["EX_ALL_OFFERS"],
+                                                     "virtualise": "true"
+                                                   },
+    
                            "locale" : "pt"
                           }';
+
+//        $operacaoBook = "listMarketBook";
+//        $parametroBook = '{
+//                           "marketIds" : [' . $id_mercado_tratado . '"],                               
+//                           "locale" : "pt"
+//                          }';
+
+
         $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
+
 
         foreach ($respostaBook[0]->result as $mercadoBook) {
             $data_market[] = array(
                 'book_id' => $mercadoBook->marketId,
-                'mandante' => isset($mercadoBook->runners[0]->lastPriceTraded) ? $mercadoBook->runners[0]->lastPriceTraded : '0.0',
-                'visitante' => isset($mercadoBook->runners[1]->lastPriceTraded) ? $mercadoBook->runners[1]->lastPriceTraded : '0.0',
-                'empate' => isset($mercadoBook->runners[2]->lastPriceTraded) ? $mercadoBook->runners[2]->lastPriceTraded : '0.0'
+                'mandante_afavor' => isset($mercadoBook->runners[0]->ex->availableToBack[0]->price) ? $mercadoBook->runners[0]->ex->availableToBack[0]->price : '0.0',
+                'visitante_afavor' => isset($mercadoBook->runners[1]->ex->availableToBack[0]->price) ? $mercadoBook->runners[1]->ex->availableToBack[0]->price : '0.0',
+                'empate_afavor' => isset($mercadoBook->runners[2]->ex->availableToBack[0]->price) ? $mercadoBook->runners[2]->ex->availableToBack[0]->price : '0.0',
+                'mandante_contra' => isset($mercadoBook->runners[0]->ex->availableToLay[0]->price) ? $mercadoBook->runners[0]->ex->availableToLay[0]->price : '0.0',
+                'visitante_contra' => isset($mercadoBook->runners[1]->ex->availableToLay[0]->price) ? $mercadoBook->runners[1]->ex->availableToLay[0]->price : '0.0',
+                'empate_contra' => isset($mercadoBook->runners[2]->ex->availableToLay[0]->price) ? $mercadoBook->runners[2]->ex->availableToLay[0]->price : '0.0',
             );
         }
+
+//        foreach ($respostaBook[0]->result as $mercadoBook) {
+//            $data_market[] = array(
+//                'book_id' => $mercadoBook->marketId,
+//                'mandante' => isset($mercadoBook->runners[0]->lastPriceTraded) ? $mercadoBook->runners[0]->lastPriceTraded : '0.0',
+//                'visitante' => isset($mercadoBook->runners[1]->lastPriceTraded) ? $mercadoBook->runners[1]->lastPriceTraded : '0.0',
+//                'empate' => isset($mercadoBook->runners[2]->lastPriceTraded) ? $mercadoBook->runners[2]->lastPriceTraded : '0.0'
+//            );
+//        }
 
         $data = array(
             'book' => $data_market,
