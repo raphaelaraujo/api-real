@@ -17,6 +17,20 @@ class Core_model extends CI_Model {
         }
     }
 
+    public function get_all_in($table = null, $campo = null, $value = null, $order_field = null) {
+
+        if ($table && $this->db->table_exists($table)) {
+
+            if (is_array($value)) {
+                $this->db->where_in($campo, $value);
+                $this->db->order_by($order_field, 'ASC');
+            }
+            return $this->db->get($table)->result();
+        } else {
+            return false;
+        }
+    }
+
     public function get_all_join() {
         $this->db->select('*');
         $this->db->from('competicoes');

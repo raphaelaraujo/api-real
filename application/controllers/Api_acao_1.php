@@ -131,9 +131,10 @@ class Api_acao_1 extends CI_Controller {
         //$lista_competicao = $this->core_model->get_all('competicoes');
         //$lista_mercado = $this->core_model->get_all('mercado');
 
-        $lista_competicao = $this->core_model->get_all('competicoes', array('id' => '13'));
-        $lista_mercado = $this->core_model->get_all('mercado', array('competicao_id' => '13'));
+        $lista_competicao = $this->core_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome');
+        $lista_mercado = $this->core_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'));
 
+        
         $id_mercado_tratado = "";
 
         foreach ($lista_mercado as $mercado) {

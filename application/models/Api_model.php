@@ -11,7 +11,7 @@ class Api_model  extends CI_Model {
     public function executa_api($operacao = null, $parametro = null) {
 
         $appKey = "ps7eHG6ouYq6Nc7l";
-        $sessionToken = "uvHPC0TOUCiTllfIpcgUUBCxXb+dyxxwd3gwHitxRko=";
+        $sessionToken = "ED1bc3lEDroNkJ3BJYgoCbCD7WmlWlD4ttgOQdoQhko=";
         $url = "https://api.betfair.com/exchange/betting/json-rpc/v1";
 
         $ch = curl_init($url);
