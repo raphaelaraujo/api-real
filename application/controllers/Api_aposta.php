@@ -2,13 +2,15 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Api_aposta extends CI_Controller {
+class Api_aposta extends CI_Controller
+{
 
-    public function index() {
-        
+    public function index()
+    {
     }
 
-    public function aposta_competicao() {
+    public function aposta_competicao()
+    {
 
         $this->core_model->delete_registros('competicoes');
 
@@ -35,24 +37,28 @@ class Api_aposta extends CI_Controller {
         }
     }
 
-    public function aposta_evento() {
+    public function aposta_evento()
+    {
         $this->core_model->delete_registros('eventos');
         $lista_competicao = $this->core_model->get_all('competicoes');
-        $id_tratado = "";
 
-        foreach ($lista_competicao as $competicao) {
-            $data_competicao[] = array(
-                'id' => $competicao->id
-            );
-        }
-        foreach ($data_competicao as $id) {
-            $id_tratado .= '"' . $id['id'] . '"' . ",";
-        }
+        if ($lista_competicao) {
 
-        $id_tratado = substr($id_tratado, 0, -2);
+            $id_tratado = "";
 
-        $operacao = "listEvents";
-        $parametro = '{"filter" : {
+            foreach ($lista_competicao as $competicao) {
+                $data_competicao[] = array(
+                    'id' => $competicao->id
+                );
+            }
+            foreach ($data_competicao as $id) {
+                $id_tratado .= '"' . $id['id'] . '"' . ",";
+            }
+
+            $id_tratado = substr($id_tratado, 0, -2);
+
+            $operacao = "listEvents";
+            $parametro = '{"filter" : {
                                     "eventTypeIds" : ["1"],
                                     "marketCountries": ["BR"],
                                     "marketBettingTypes": ["ASIAN_HANDICAP_DOUBLE_LINE"],
@@ -62,43 +68,49 @@ class Api_aposta extends CI_Controller {
                        
                       }';
 
-        $resposta = $this->api_model->executa_api($operacao, $parametro);
+            $resposta = $this->api_model->executa_api($operacao, $parametro);
 
-        foreach ($resposta[0]->result as $evento) {
-            $data['id'] = $evento->event->id;
-            $data['nome_evento'] = $evento->event->name;
-            $data['pais_evento'] = $evento->event->countryCode;
-            $data['timezone_evento'] = $evento->event->timezone;
-            $data['data_evento'] = $evento->event->openDate;
-            $data['market_count_evento'] = $evento->marketCount;
-            $data['data_cadastro_evento'] = date('Y-m-d H:i:s');
+            foreach ($resposta[0]->result as $evento) {
+                $data['id'] = $evento->event->id;
+                $data['nome_evento'] = $evento->event->name;
+                $data['pais_evento'] = $evento->event->countryCode;
+                $data['timezone_evento'] = $evento->event->timezone;
+                $data['data_evento'] = $evento->event->openDate;
+                $data['market_count_evento'] = $evento->marketCount;
+                $data['data_cadastro_evento'] = date('Y-m-d H:i:s');
 
-            $this->core_model->insert('eventos', $data);
+                $this->core_model->insert('eventos', $data);
+            }
+        } else {
+            echo 'Erro ->aposta_evento';
         }
     }
 
-    public function aposta_mercado() {
+    public function aposta_mercado()
+    {
 
         $lista_evento = $this->core_model->get_all('eventos');
         $lista_competicao = $this->core_model->get_all('competicoes');
         //$this->core_model->delete_registros('mercado');
 
-        $id_evento_tratado = "";
+        if ($lista_evento) {
 
-        foreach ($lista_evento as $evento) {
-            $data_id_evento[] = array(
-                'id' => $evento->id
-            );
-        }
-        foreach ($data_id_evento as $id) {
-            $id_evento_tratado .= '"' . $id['id'] . '"' . ",";
-        }
+            $id_evento_tratado = "";
 
-        $id_evento_tratado = substr($id_evento_tratado, 0, -2);
+            foreach ($lista_evento as $evento) {
+                $data_id_evento[] = array(
+                    'id' => $evento->id
+                );
+            }
+            foreach ($data_id_evento as $id) {
+                $id_evento_tratado .= '"' . $id['id'] . '"' . ",";
+            }
+
+            $id_evento_tratado = substr($id_evento_tratado, 0, -2);
 
 
-        $operacao = "listMarketCatalogue";
-        $parametro = '{"filter" : {
+            $operacao = "listMarketCatalogue";
+            $parametro = '{"filter" : {
                                    "eventIds" : [' . $id_evento_tratado . '"],
                                    "marketCountries": ["BR"],
                                    "marketTypeCodes": ["MATCH_ODDS"]
@@ -111,45 +123,51 @@ class Api_aposta extends CI_Controller {
                                 "locale" : "pt"
           }';
 
-        $resposta = $this->api_model->executa_api($operacao, $parametro);
+            $resposta = $this->api_model->executa_api($operacao, $parametro);
 
-        foreach ($resposta[0]->result as $mercado) {
+            foreach ($resposta[0]->result as $mercado) {
 
-            if (!$this->core_model->get_by_id('mercado', array('mercado_id' => $mercado->marketId))) {
-                $data['mercado_id'] = $mercado->marketId;
-                $data['competicao_id'] = $mercado->competition->id;
-                $data['evento_id'] = $mercado->event->id;
-                $data['evento_nome'] = $mercado->event->name;
-                $data['codigo_pais'] = $mercado->event->countryCode;
-                $data['timezone'] = $mercado->event->timezone;
-                $data['evento_data'] = date("d/m/Y H:i:s", strtotime($mercado->event->openDate));
-                $data['data_cadastro'] = date("Y-m-d");
+                if (!$this->core_model->get_by_id('mercado', array('mercado_id' => $mercado->marketId))) {
+                    $data['mercado_id'] = $mercado->marketId;
+                    $data['competicao_id'] = $mercado->competition->id;
+                    $data['evento_id'] = $mercado->event->id;
+                    $data['evento_nome'] = $mercado->event->name;
+                    $data['codigo_pais'] = $mercado->event->countryCode;
+                    $data['timezone'] = $mercado->event->timezone;
+                    $data['evento_data'] = date("d/m/Y H:i:s", strtotime($mercado->event->openDate));
+                    $data['data_cadastro'] = date("Y-m-d");
 
-                $this->core_model->insert('mercado', $data);
+                    $this->core_model->insert('mercado', $data);
+                }
             }
+        } else {
+            echo 'Erro ->aposta_mercado';
         }
     }
 
-    public function aposta_odds() {
+    public function aposta_odds()
+    {
 
         $lista_competicao = $this->core_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome');
         $lista_mercado = $this->core_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'));
 
-        $id_mercado_tratado = "";
+        if ($lista_mercado ) {
 
-        foreach ($lista_mercado as $mercado) {
-            $data_id_mercado[] = array(
-                'id' => $mercado->mercado_id
-            );
-        }
-        foreach ($data_id_mercado as $id) {
-            $id_mercado_tratado .= '"' . $id['id'] . '"' . ",";
-        }
+            $id_mercado_tratado = "";
 
-        $id_mercado_tratado = substr($id_mercado_tratado, 0, -2);
+            foreach ($lista_mercado as $mercado) {
+                $data_id_mercado[] = array(
+                    'id' => $mercado->mercado_id
+                );
+            }
+            foreach ($data_id_mercado as $id) {
+                $id_mercado_tratado .= '"' . $id['id'] . '"' . ",";
+            }
 
-        $operacaoBook = "listMarketBook";
-        $parametroBook = '{
+            $id_mercado_tratado = substr($id_mercado_tratado, 0, -2);
+
+            $operacaoBook = "listMarketBook";
+            $parametroBook = '{
                            "marketIds" : [' . $id_mercado_tratado . '"],
                            "priceProjection": {
                                                      "priceData": ["EX_ALL_OFFERS"],
@@ -159,43 +177,45 @@ class Api_aposta extends CI_Controller {
                            "locale" : "pt"
                           }';
 
-        $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
+            $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
 
 
-        foreach ($respostaBook[0]->result as $mercadoBook) {
+            foreach ($respostaBook[0]->result as $mercadoBook) {
 
-            if (!$this->core_model->get_by_id('aposta', array('aposta_mercado_id' => $mercadoBook->marketId))) {
-                $data['aposta_mercado_id'] = $mercadoBook->marketId;
-                $data['mandante_afavor'] = isset($mercadoBook->runners[0]->ex->availableToBack[0]->price) ? $mercadoBook->runners[0]->ex->availableToBack[0]->price : '0.0';
-                $data['visitante_afavor'] = isset($mercadoBook->runners[1]->ex->availableToBack[0]->price) ? $mercadoBook->runners[1]->ex->availableToBack[0]->price : '0.0';
-                $data['empate_afavor'] = isset($mercadoBook->runners[2]->ex->availableToBack[0]->price) ? $mercadoBook->runners[2]->ex->availableToBack[0]->price : '0.0';
-                $data['mandante_contra'] = isset($mercadoBook->runners[0]->ex->availableToLay[0]->price) ? $mercadoBook->runners[0]->ex->availableToLay[0]->price : '0.0';
-                $data['visitante_contra'] = isset($mercadoBook->runners[1]->ex->availableToLay[0]->price) ? $mercadoBook->runners[1]->ex->availableToLay[0]->price : '0.0';
-                $data['empate_contra'] = isset($mercadoBook->runners[2]->ex->availableToLay[0]->price) ? $mercadoBook->runners[2]->ex->availableToLay[0]->price : '0.0';
+                if (!$this->core_model->get_by_id('aposta', array('aposta_mercado_id' => $mercadoBook->marketId))) {
+                    $data['aposta_mercado_id'] = $mercadoBook->marketId;
+                    $data['mandante_afavor'] = isset($mercadoBook->runners[0]->ex->availableToBack[0]->price) ? $mercadoBook->runners[0]->ex->availableToBack[0]->price : '0.0';
+                    $data['visitante_afavor'] = isset($mercadoBook->runners[1]->ex->availableToBack[0]->price) ? $mercadoBook->runners[1]->ex->availableToBack[0]->price : '0.0';
+                    $data['empate_afavor'] = isset($mercadoBook->runners[2]->ex->availableToBack[0]->price) ? $mercadoBook->runners[2]->ex->availableToBack[0]->price : '0.0';
+                    $data['mandante_contra'] = isset($mercadoBook->runners[0]->ex->availableToLay[0]->price) ? $mercadoBook->runners[0]->ex->availableToLay[0]->price : '0.0';
+                    $data['visitante_contra'] = isset($mercadoBook->runners[1]->ex->availableToLay[0]->price) ? $mercadoBook->runners[1]->ex->availableToLay[0]->price : '0.0';
+                    $data['empate_contra'] = isset($mercadoBook->runners[2]->ex->availableToLay[0]->price) ? $mercadoBook->runners[2]->ex->availableToLay[0]->price : '0.0';
 
-                $this->core_model->insert('aposta', $data);
-                
-            } else {
+                    $this->core_model->insert('aposta', $data);
+                } else {
 
-                $data['aposta_mercado_id'] = $mercadoBook->marketId;
-                $data['mandante_afavor'] = isset($mercadoBook->runners[0]->ex->availableToBack[0]->price) ? $mercadoBook->runners[0]->ex->availableToBack[0]->price : '0.0';
-                $data['visitante_afavor'] = isset($mercadoBook->runners[1]->ex->availableToBack[0]->price) ? $mercadoBook->runners[1]->ex->availableToBack[0]->price : '0.0';
-                $data['empate_afavor'] = isset($mercadoBook->runners[2]->ex->availableToBack[0]->price) ? $mercadoBook->runners[2]->ex->availableToBack[0]->price : '0.0';
-                $data['mandante_contra'] = isset($mercadoBook->runners[0]->ex->availableToLay[0]->price) ? $mercadoBook->runners[0]->ex->availableToLay[0]->price : '0.0';
-                $data['visitante_contra'] = isset($mercadoBook->runners[1]->ex->availableToLay[0]->price) ? $mercadoBook->runners[1]->ex->availableToLay[0]->price : '0.0';
-                $data['empate_contra'] = isset($mercadoBook->runners[2]->ex->availableToLay[0]->price) ? $mercadoBook->runners[2]->ex->availableToLay[0]->price : '0.0';                
-                $data['data_ult_atualizacao'] = date("Y-m-d H:i:s");
+                    $data['aposta_mercado_id'] = $mercadoBook->marketId;
+                    $data['mandante_afavor'] = isset($mercadoBook->runners[0]->ex->availableToBack[0]->price) ? $mercadoBook->runners[0]->ex->availableToBack[0]->price : '0.0';
+                    $data['visitante_afavor'] = isset($mercadoBook->runners[1]->ex->availableToBack[0]->price) ? $mercadoBook->runners[1]->ex->availableToBack[0]->price : '0.0';
+                    $data['empate_afavor'] = isset($mercadoBook->runners[2]->ex->availableToBack[0]->price) ? $mercadoBook->runners[2]->ex->availableToBack[0]->price : '0.0';
+                    $data['mandante_contra'] = isset($mercadoBook->runners[0]->ex->availableToLay[0]->price) ? $mercadoBook->runners[0]->ex->availableToLay[0]->price : '0.0';
+                    $data['visitante_contra'] = isset($mercadoBook->runners[1]->ex->availableToLay[0]->price) ? $mercadoBook->runners[1]->ex->availableToLay[0]->price : '0.0';
+                    $data['empate_contra'] = isset($mercadoBook->runners[2]->ex->availableToLay[0]->price) ? $mercadoBook->runners[2]->ex->availableToLay[0]->price : '0.0';
+                    //$data['data_ult_atualizacao'] = date("Y-m-d H:i:s");
 
-                $this->core_model->update('aposta', $data, array('aposta_mercado_id' => $mercadoBook->marketId));
+                    $this->core_model->update('aposta', $data, array('aposta_mercado_id' => $mercadoBook->marketId));
+                }
             }
+        } else {
+            echo 'Erro ->aposta_odds';
         }
     }
 
-    public function aposta_geral() {
+    public function aposta_geral()
+    {
         $this->aposta_competicao();
         $this->aposta_evento();
         $this->aposta_mercado();
         $this->aposta_odds();
     }
-
 }
