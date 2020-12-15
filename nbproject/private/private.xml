@@ -6,6 +6,8 @@
             <file>file:/C:/xampp/htdocs/api-real/application/models/Core_model.php</file>
             <file>file:/C:/xampp/htdocs/api-real/application/controllers/Api_acao_1.php</file>
             <file>file:/C:/xampp/htdocs/api-real/application/models/Api_model.php</file>
+            <file>file:/C:/xampp/htdocs/api-real/application/controllers/Api_service.php</file>
+            <file>file:/C:/xampp/htdocs/api-real/application/controllers/Api_aposta.php</file>
             <file>file:/C:/xampp/htdocs/api-real/application/views/bet/index_layout_1.php</file>
         </group>
     </open-files>

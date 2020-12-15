@@ -23,6 +23,7 @@ class Core_model extends CI_Model {
 
             if (is_array($value)) {
                 $this->db->where_in($campo, $value);
+                $this->db->where('data_cadastro >= now() ');
                 $this->db->order_by($order_field, 'ASC');
             }
             return $this->db->get($table)->result();
@@ -84,9 +85,9 @@ class Core_model extends CI_Model {
         if ($table && $this->db->table_exists($table) && is_array($data) && is_array($condition)) {
 
             if ($this->db->update($table, $data, $condition)) {
-                $this->session->set_flashdata('success', 'Dados atualizados com sucesso!');
+               // $this->session->set_flashdata('success', 'Dados atualizados com sucesso!');
             } else {
-                $this->session->set_flashdata('error', 'Não foi possivel atualizar os dados');
+               // $this->session->set_flashdata('error', 'Não foi possivel atualizar os dados');
             }
         } else {
             return false;
