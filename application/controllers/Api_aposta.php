@@ -183,7 +183,8 @@ class Api_aposta extends CI_Controller {
                 $data['empate_afavor'] = isset($mercadoBook->runners[2]->ex->availableToBack[0]->price) ? $mercadoBook->runners[2]->ex->availableToBack[0]->price : '0.0';
                 $data['mandante_contra'] = isset($mercadoBook->runners[0]->ex->availableToLay[0]->price) ? $mercadoBook->runners[0]->ex->availableToLay[0]->price : '0.0';
                 $data['visitante_contra'] = isset($mercadoBook->runners[1]->ex->availableToLay[0]->price) ? $mercadoBook->runners[1]->ex->availableToLay[0]->price : '0.0';
-                $data['empate_contra'] = isset($mercadoBook->runners[2]->ex->availableToLay[0]->price) ? $mercadoBook->runners[2]->ex->availableToLay[0]->price : '0.0';
+                $data['empate_contra'] = isset($mercadoBook->runners[2]->ex->availableToLay[0]->price) ? $mercadoBook->runners[2]->ex->availableToLay[0]->price : '0.0';                
+                $data['data_ult_atualizacao'] = date("Y-m-d H:i:s");
 
                 $this->core_model->update('aposta', $data, array('aposta_mercado_id' => $mercadoBook->marketId));
             }
@@ -191,7 +192,6 @@ class Api_aposta extends CI_Controller {
     }
 
     public function aposta_geral() {
-
         $this->aposta_competicao();
         $this->aposta_evento();
         $this->aposta_mercado();

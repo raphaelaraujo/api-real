@@ -28,8 +28,7 @@ class Api_acao_1 extends CI_Controller {
             $data['nome'] = $competicao->competition->name;
             $data['regiao'] = $competicao->competitionRegion;
             $data['market_count'] = $competicao->marketCount;
-            $data['data_cadastro'] = date('Y-m-d H:i:s');
-
+            
             $this->core_model->insert('competicoes', $data);
             //} //fim do if
         }
@@ -71,8 +70,7 @@ class Api_acao_1 extends CI_Controller {
             $data['timezone_evento'] = $evento->event->timezone;
             $data['data_evento'] = $evento->event->openDate;
             $data['market_count_evento'] = $evento->marketCount;
-            $data['data_cadastro_evento'] = date('Y-m-d H:i:s');
-
+            
             $this->core_model->insert('eventos', $data);
         }
     }
@@ -124,7 +122,6 @@ class Api_acao_1 extends CI_Controller {
                 $data['codigo_pais'] = $mercado->event->countryCode;
                 $data['timezone'] = $mercado->event->timezone;
                 $data['evento_data'] = date("d/m/Y H:i:s", strtotime($mercado->event->openDate));
-                $data['data_cadastro'] = date("Y-m-d");
 
                 $this->core_model->insert('mercado', $data);
             }
@@ -139,7 +136,7 @@ class Api_acao_1 extends CI_Controller {
         $lista_competicao = $this->core_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome');
         $lista_mercado = $this->core_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'));
 
-
+        
         $id_mercado_tratado = "";
 
         foreach ($lista_mercado as $mercado) {
@@ -147,6 +144,7 @@ class Api_acao_1 extends CI_Controller {
                 'id' => $mercado->mercado_id
             );
         }
+
         foreach ($data_id_mercado as $id) {
             $id_mercado_tratado .= '"' . $id['id'] . '"' . ",";
         }
@@ -173,11 +171,7 @@ class Api_acao_1 extends CI_Controller {
 
         $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
         
-        var_dump($respostaBook);
-        exit();
-
-
-        foreach ($respostaBook[0]->result as $mercadoBook) {                        
+        foreach ($respostaBook[0]->result as $mercadoBook) {
             $data_market[] = array(
                 'book_id' => $mercadoBook->marketId,
                 'mandante_afavor' => isset($mercadoBook->runners[0]->ex->availableToBack[0]->price) ? $mercadoBook->runners[0]->ex->availableToBack[0]->price : '0.0',
