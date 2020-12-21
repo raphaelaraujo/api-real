@@ -9,6 +9,9 @@ class Api_service extends CI_Controller {
     }
 
     public function service_odds($lista_mercado = null) {
+        
+        var_dump($lista_mercado);
+        exit();
 
         $id_mercado_tratado = "";
 
@@ -50,23 +53,9 @@ class Api_service extends CI_Controller {
 
     public function teste() {
 
-        $id = array('1.176833737', '1.176848721', '1.176848406', '1.176848511');
+        $id = array("1.176833737", "1.176848721", "1.176848406", "1.176848511");
 
-        $send = serialize($id); //trasnforma o array em string
-        $send = urlencode($send); //codifica a string para ser utilizada no link
-        echo "<p>O valor serializado é: " . $send . "</p>"; //imprime a string codificada
-
-        echo '<p><a href="pagina2.php?send=' . $send . '">Enviar</a></p>';
-
-
-        $received = urldecode($_GET['send']); //decodifica o valor passado pelo link
-        $received = stripslashes($received); //limpa a string de  antes de "
-        $received = unserialize($received); //transforma a string em array
-        echo($received); //imprime o array
-
-
-
-
+        echo http_build_query($id);
         exit();
         //echo http_build_query($data, 'myvar_');
     }

@@ -854,7 +854,7 @@ CREATE TABLE `mercado` (
   `codigo_pais` varchar(3) NOT NULL,
   `timezone` varchar(3) NOT NULL,
   `evento_data` varchar(24) NOT NULL,
-  `data_cadastro` date NOT NULL DEFAULT current_timestamp()
+  `data_cadastro` date NOT NULL DEFAULT CURDATE()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

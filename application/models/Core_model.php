@@ -10,6 +10,7 @@ class Core_model extends CI_Model {
 
             if (is_array($condition)) {
                 $this->db->where($condition);
+                $this->db->where('data_cadastro >= CURDATE() ');
             }
             return $this->db->get($table)->result();
         } else {
@@ -23,7 +24,7 @@ class Core_model extends CI_Model {
 
             if (is_array($value)) {
                 $this->db->where_in($campo, $value);
-                $this->db->where('data_cadastro >= now() ');
+                $this->db->where('data_cadastro >= CURDATE() ');
                 $this->db->order_by($order_field, 'ASC');
             }
             return $this->db->get($table)->result();
