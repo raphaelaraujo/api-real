@@ -31,7 +31,7 @@ class Api_service extends CI_Controller {
                            "locale" : "pt"
                           }';
 
-        $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
+        $respostaBook = $this->api_model->executa_api_betfair($operacaoBook, $parametroBook);
 
         foreach ($respostaBook[0]->result as $mercadoBook) {
             $data_market[] = array(

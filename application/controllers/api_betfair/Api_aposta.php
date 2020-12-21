@@ -21,7 +21,7 @@ class Api_aposta extends CI_Controller {
                        "locale" : "pt"          
                       }';
 
-        $resposta = $this->api_model->executa_api($operacao, $parametro);
+        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
 
         foreach ($resposta[0]->result as $competicao) {
             $data['id'] = $competicao->competition->id;
@@ -62,7 +62,7 @@ class Api_aposta extends CI_Controller {
                        
                       }';
 
-        $resposta = $this->api_model->executa_api($operacao, $parametro);
+        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
 
         foreach ($resposta[0]->result as $evento) {
             $data['id'] = $evento->event->id;
@@ -111,7 +111,7 @@ class Api_aposta extends CI_Controller {
                                 "locale" : "pt"
           }';
 
-        $resposta = $this->api_model->executa_api($operacao, $parametro);
+        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
 
         foreach ($resposta[0]->result as $mercado) {
 
@@ -159,7 +159,7 @@ class Api_aposta extends CI_Controller {
                            "locale" : "pt"
                           }';
 
-        $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
+        $respostaBook = $this->api_model->executa_api_betfair($operacaoBook, $parametroBook);
 
 
         foreach ($respostaBook[0]->result as $mercadoBook) {

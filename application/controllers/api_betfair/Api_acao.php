@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Api_acao_1 extends CI_Controller {
+class Api_acao extends CI_Controller {
 
     public function index() {
         
@@ -21,7 +21,7 @@ class Api_acao_1 extends CI_Controller {
                        "locale" : "pt"          
                       }';
 
-        $resposta = $this->api_model->executa_api($operacao, $parametro);
+        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
 
         foreach ($resposta[0]->result as $competicao) {
             $data['id'] = $competicao->competition->id;
@@ -62,7 +62,7 @@ class Api_acao_1 extends CI_Controller {
                        
                       }';
 
-        $resposta = $this->api_model->executa_api($operacao, $parametro);
+        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
 
         foreach ($resposta[0]->result as $evento) {
             $data['id'] = $evento->event->id;
@@ -111,7 +111,7 @@ class Api_acao_1 extends CI_Controller {
                                 "locale" : "pt"
           }';
 
-        $resposta = $this->api_model->executa_api($operacao, $parametro);
+        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
 
         foreach ($resposta[0]->result as $mercado) {
 
@@ -171,7 +171,7 @@ class Api_acao_1 extends CI_Controller {
 //                          }';
 
 
-        $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
+        $respostaBook = $this->api_model->executa_api_betfair($operacaoBook, $parametroBook);
         
         var_dump($respostaBook);
         exit();
@@ -204,7 +204,7 @@ class Api_acao_1 extends CI_Controller {
             'mercado' => $lista_mercado
         );
 
-        $this->load->view('bet/index_layout_1', $data);
+        $this->load->view('bet/index_layout', $data);
     }
 
     public function core_geral() {
