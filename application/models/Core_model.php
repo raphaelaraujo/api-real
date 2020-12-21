@@ -4,6 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Core_model extends CI_Model {
 
+    public function get_all_jogo($table = null, $condition = null) {
+        $this->db->select('*'
+                . ',(select logo_team from time_football WHERE home_team_id = team_id and match_league_id = team_league_id) as logo_home_team'
+                . ',(select logo_team from time_football WHERE away_team_id = team_id and match_league_id = team_league_id) as logo_away_team'
+                . ',SUBSTRING(ROUND, 18, 2) AS rodada');
+        $this->db->where($condition);
+        return $this->db->get($table)->result();
+    }
+
     public function get_all($table = null, $condition = null) {
 
         if ($table && $this->db->table_exists($table)) {
@@ -11,6 +20,19 @@ class Core_model extends CI_Model {
             if (is_array($condition)) {
                 $this->db->where($condition);
                 $this->db->where('data_cadastro >= CURDATE() ');
+            }
+            return $this->db->get($table)->result();
+        } else {
+            return false;
+        }
+    }
+
+    public function get_all_football($table = null, $condition = null) {
+
+        if ($table && $this->db->table_exists($table)) {
+
+            if (is_array($condition)) {
+                $this->db->where($condition);
             }
             return $this->db->get($table)->result();
         } else {
@@ -86,9 +108,9 @@ class Core_model extends CI_Model {
         if ($table && $this->db->table_exists($table) && is_array($data) && is_array($condition)) {
 
             if ($this->db->update($table, $data, $condition)) {
-               // $this->session->set_flashdata('success', 'Dados atualizados com sucesso!');
+                // $this->session->set_flashdata('success', 'Dados atualizados com sucesso!');
             } else {
-               // $this->session->set_flashdata('error', 'Não foi possivel atualizar os dados');
+                // $this->session->set_flashdata('error', 'Não foi possivel atualizar os dados');
             }
         } else {
             return false;

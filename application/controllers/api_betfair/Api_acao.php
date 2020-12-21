@@ -2,19 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-<<<<<<< HEAD:application/controllers/api_betfair/Api_acao.php
-class Api_acao extends CI_Controller {
-=======
-class Api_acao_1 extends CI_Controller
-{
->>>>>>> 628bcb1a346e9ae5520c94b7e2aecd2dbb7571ab:application/controllers/Api_acao_1.php
+class Api_acao_1 extends CI_Controller {
 
-    public function index()
-    {
+    public function index() {
+        
     }
 
-    public function core_competicao()
-    {
+    public function core_competicao() {
 
         $this->core_model->delete_registros('competicoes');
 
@@ -36,12 +30,11 @@ class Api_acao_1 extends CI_Controller
             $data['market_count'] = $competicao->marketCount;
 
             $this->core_model->insert('competicoes', $data);
-            //} //fim do if
+//} //fim do if
         }
     }
 
-    public function core_evento()
-    {
+    public function core_evento() {
         $this->core_model->delete_registros('eventos');
 
         if ($this->core_model->get_all('competicoes')) {
@@ -70,11 +63,10 @@ class Api_acao_1 extends CI_Controller
                        
                       }';
 
-<<<<<<< HEAD:application/controllers/api_betfair/Api_acao.php
-        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
-=======
-            $resposta = $this->api_model->executa_api($operacao, $parametro);
->>>>>>> 628bcb1a346e9ae5520c94b7e2aecd2dbb7571ab:application/controllers/Api_acao_1.php
+
+            $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
+
+
 
             foreach ($resposta[0]->result as $evento) {
                 $data['id'] = $evento->event->id;
@@ -91,12 +83,11 @@ class Api_acao_1 extends CI_Controller
         }
     }
 
-    public function core_mercado()
-    {
+    public function core_mercado() {
         if ($this->core_model->get_all('eventos') && $this->core_model->get_all('competicoes')) {
             $lista_evento = $this->core_model->get_all('eventos');
             $lista_competicao = $this->core_model->get_all('competicoes');
-            //$this->core_model->delete_registros('mercado');
+//$this->core_model->delete_registros('mercado');
 
             $id_evento_tratado = "";
 
@@ -126,11 +117,8 @@ class Api_acao_1 extends CI_Controller
                                 "locale" : "pt"
           }';
 
-<<<<<<< HEAD:application/controllers/api_betfair/Api_acao.php
-        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
-=======
             $resposta = $this->api_model->executa_api($operacao, $parametro);
->>>>>>> 628bcb1a346e9ae5520c94b7e2aecd2dbb7571ab:application/controllers/Api_acao_1.php
+
 
             foreach ($resposta[0]->result as $mercado) {
 
@@ -152,15 +140,13 @@ class Api_acao_1 extends CI_Controller
         }
     }
 
-    public function core_odds()
-    {
+    public function core_odds() {
 
-        //$lista_competicao = $this->core_model->get_all('competicoes');
-        //$lista_mercado = $this->core_model->get_all('mercado');
+//$lista_competicao = $this->core_model->get_all('competicoes');
+//$lista_mercado = $this->core_model->get_all('mercado');
         if (
-            $this->core_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome')
-            &&
-            $this->core_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'))
+                $this->core_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome') &&
+                $this->core_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'))
         ) {
 
             $lista_competicao = $this->core_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome');
@@ -192,26 +178,6 @@ class Api_acao_1 extends CI_Controller
                            "locale" : "pt"
                           }';
 
-<<<<<<< HEAD:application/controllers/api_betfair/Api_acao.php
-//        $operacaoBook = "listMarketBook";
-//        $parametroBook = '{
-//                           "marketIds" : [' . $id_mercado_tratado . '"],                               
-//                           "locale" : "pt"
-//                          }';
-
-
-        $respostaBook = $this->api_model->executa_api_betfair($operacaoBook, $parametroBook);
-        
-        var_dump($respostaBook);
-        exit();
-
-=======
-            //        $operacaoBook = "listMarketBook";
-            //        $parametroBook = '{
-            //                           "marketIds" : [' . $id_mercado_tratado . '"],                               
-            //                           "locale" : "pt"
-            //                          }';
-
 
             $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
 
@@ -226,16 +192,7 @@ class Api_acao_1 extends CI_Controller
                     'empate_contra' => isset($mercadoBook->runners[2]->ex->availableToLay[0]->price) ? $mercadoBook->runners[2]->ex->availableToLay[0]->price : '0.0',
                 );
             }
->>>>>>> 628bcb1a346e9ae5520c94b7e2aecd2dbb7571ab:application/controllers/Api_acao_1.php
 
-            //        foreach ($respostaBook[0]->result as $mercadoBook) {
-            //            $data_market[] = array(
-            //                'book_id' => $mercadoBook->marketId,
-            //                'mandante' => isset($mercadoBook->runners[0]->lastPriceTraded) ? $mercadoBook->runners[0]->lastPriceTraded : '0.0',
-            //                'visitante' => isset($mercadoBook->runners[1]->lastPriceTraded) ? $mercadoBook->runners[1]->lastPriceTraded : '0.0',
-            //                'empate' => isset($mercadoBook->runners[2]->lastPriceTraded) ? $mercadoBook->runners[2]->lastPriceTraded : '0.0'
-            //            );
-            //        }
 
             $data = array(
                 'book' => $data_market,
@@ -243,37 +200,18 @@ class Api_acao_1 extends CI_Controller
                 'mercado' => $lista_mercado
             );
 
-<<<<<<< HEAD:application/controllers/api_betfair/Api_acao.php
-//        foreach ($respostaBook[0]->result as $mercadoBook) {
-//            $data_market[] = array(
-//                'book_id' => $mercadoBook->marketId,
-//                'mandante' => isset($mercadoBook->runners[0]->lastPriceTraded) ? $mercadoBook->runners[0]->lastPriceTraded : '0.0',
-//                'visitante' => isset($mercadoBook->runners[1]->lastPriceTraded) ? $mercadoBook->runners[1]->lastPriceTraded : '0.0',
-//                'empate' => isset($mercadoBook->runners[2]->lastPriceTraded) ? $mercadoBook->runners[2]->lastPriceTraded : '0.0'
-//            );
-//        }
-
-        $data = array(
-            'book' => $data_market,
-            'competicao' => $lista_competicao,
-            'mercado' => $lista_mercado
-        );
-
-        $this->load->view('bet/index_layout', $data);
-=======
-            $this->load->view('bet/index_layout_1', $data);
+            $this->load->view('bet/index_layout', $data);
         } else {
             echo "Erro ->odds";
         }
->>>>>>> 628bcb1a346e9ae5520c94b7e2aecd2dbb7571ab:application/controllers/Api_acao_1.php
     }
 
-    public function core_geral()
-    {
+    public function core_geral() {
 
         $this->core_competicao();
         $this->core_evento();
         $this->core_mercado();
         $this->core_odds();
     }
+
 }

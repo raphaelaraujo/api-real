@@ -2,15 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Api_aposta extends CI_Controller
-{
+class Api_aposta extends CI_Controller {
 
-    public function index()
-    {
+    public function index() {
+        
     }
 
-    public function aposta_competicao()
-    {
+    public function aposta_competicao() {
 
         $this->core_model->delete_registros('competicoes');
 
@@ -37,8 +35,7 @@ class Api_aposta extends CI_Controller
         }
     }
 
-    public function aposta_evento()
-    {
+    public function aposta_evento() {
         $this->core_model->delete_registros('eventos');
         $lista_competicao = $this->core_model->get_all('competicoes');
 
@@ -68,11 +65,9 @@ class Api_aposta extends CI_Controller
                        
                       }';
 
-<<<<<<< HEAD:application/controllers/api_betfair/Api_aposta.php
-        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
-=======
+
             $resposta = $this->api_model->executa_api($operacao, $parametro);
->>>>>>> 628bcb1a346e9ae5520c94b7e2aecd2dbb7571ab:application/controllers/Api_aposta.php
+
 
             foreach ($resposta[0]->result as $evento) {
                 $data['id'] = $evento->event->id;
@@ -90,8 +85,7 @@ class Api_aposta extends CI_Controller
         }
     }
 
-    public function aposta_mercado()
-    {
+    public function aposta_mercado() {
 
         $lista_evento = $this->core_model->get_all('eventos');
         $lista_competicao = $this->core_model->get_all('competicoes');
@@ -127,11 +121,9 @@ class Api_aposta extends CI_Controller
                                 "locale" : "pt"
           }';
 
-<<<<<<< HEAD:application/controllers/api_betfair/Api_aposta.php
-        $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
-=======
-            $resposta = $this->api_model->executa_api($operacao, $parametro);
->>>>>>> 628bcb1a346e9ae5520c94b7e2aecd2dbb7571ab:application/controllers/Api_aposta.php
+
+            $resposta = $this->api_model->executa_api_betfair($operacao, $parametro);
+
 
             foreach ($resposta[0]->result as $mercado) {
 
@@ -153,13 +145,12 @@ class Api_aposta extends CI_Controller
         }
     }
 
-    public function aposta_odds()
-    {
+    public function aposta_odds() {
 
         $lista_competicao = $this->core_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome');
         $lista_mercado = $this->core_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'));
 
-        if ($lista_mercado ) {
+        if ($lista_mercado) {
 
             $id_mercado_tratado = "";
 
@@ -185,11 +176,9 @@ class Api_aposta extends CI_Controller
                            "locale" : "pt"
                           }';
 
-<<<<<<< HEAD:application/controllers/api_betfair/Api_aposta.php
-        $respostaBook = $this->api_model->executa_api_betfair($operacaoBook, $parametroBook);
-=======
+
             $respostaBook = $this->api_model->executa_api($operacaoBook, $parametroBook);
->>>>>>> 628bcb1a346e9ae5520c94b7e2aecd2dbb7571ab:application/controllers/Api_aposta.php
+
 
 
             foreach ($respostaBook[0]->result as $mercadoBook) {
@@ -223,11 +212,11 @@ class Api_aposta extends CI_Controller
         }
     }
 
-    public function aposta_geral()
-    {
+    public function aposta_geral() {
         $this->aposta_competicao();
         $this->aposta_evento();
         $this->aposta_mercado();
         $this->aposta_odds();
     }
+
 }

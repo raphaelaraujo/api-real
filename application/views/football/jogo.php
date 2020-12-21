@@ -38,11 +38,50 @@
                     <section class="section">
                         <div class="section-body">
                             <!-- add content here -->
-                            <h2>País</h2>
-                            <a href="<?php echo base_url('api_football/api_acao/tela_competicao/BR') ?>" class="btn btn-primary">Brasil</a>
-                            <a href="<?php echo base_url('api_football/api_acao/tela_competicao/IT') ?>" class="btn btn-primary">Itália</a>
+                            <div class="row">
+                                <?php foreach ($jogo as $j) : ?>                                    
+                                    <div class="col-12 col-md-6 col-lg-3">
+                                        <div class="card card-primary">                                                
+                                            <div class="card-body"> 
+                                                <div class="row">
+                                                    <img width="70px" height="70px" src="<?php echo $j->logo_home_team ?>">                                                    
+                                                    <h4>&nbsp;&nbsp;X&nbsp;&nbsp;</h4>
+                                                    <img width="70px" height="70px" src="<?php echo $j->logo_away_team ?>">
+                                                </div>
+                                                <div class="row">
+                                                    <label><?php echo $j->home_team_name ?></label>
+                                                    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                                    <label><?php echo $j->away_team_name ?></label>
+                                                </div>
+                                                <br/>
+                                                <a href="<?php echo base_url('api_football/api_acao/tela_detalhe/' . $j->match_id) ?>"<button type="button" class="btn btn-primary">Detalhes</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     </section>
+                    <!-- basic modal -->
+                    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Detalhes da Partida</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Content goes here..
+                                </div>
+                                <div class="modal-footer bg-whitesmoke br">                                    
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="settingSidebar">
                         <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
                         </a>

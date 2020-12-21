@@ -5,12 +5,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Api_acao extends CI_Controller {
 
     public function index() {
-        $operacao = "fixtures/league/1396";
-        $resposta = $this->api_model->executa_api_football($operacao);
-        var_dump($resposta);
-
-        //327992
-        //1396
+        $this->load->view('football/index');
+//        $operacao = "fixtures/league/1396";
+//        $resposta = $this->api_model->executa_api_football($operacao);
+//        var_dump($resposta);
+//
+//        //327992
+//        //1396
     }
 
     //America/Sao_Paulo        
@@ -45,10 +46,9 @@ class Api_acao extends CI_Controller {
     }
 
     public function core_time() {
-
-        $codigo_pais = 'BR';
-
-        $lista_competicao = $this->core_model->get_all('competicao_football', array('country_code ' => $codigo_pais));
+       
+        $codigo_pais = 'IT';
+        $lista_competicao = $this->core_model->get_all_football('competicao_football', array('country_code ' => $codigo_pais));
 
         foreach ($lista_competicao as $competicao) {
 
@@ -78,8 +78,8 @@ class Api_acao extends CI_Controller {
 
     public function core_jogos() {
 
-        $league_id = 1396;
-
+        $league_id = 2857;
+        
         $operacao = "fixtures/league/" . $league_id;
         $resposta = $this->api_model->executa_api_football($operacao);
 
@@ -110,6 +110,39 @@ class Api_acao extends CI_Controller {
                 $this->core_model->insert('jogo_football', $data);
             }
         }
+    }
+
+    public function tela_competicao($pais) {
+
+        $lista_competicao = $this->core_model->get_all_football('competicao_football', array('country_code ' => $pais));
+
+        $data = array(
+            'competicao' => $lista_competicao,
+        );
+
+        $this->load->view('football/competicao', $data);
+    }
+
+    public function tela_jogo($competicao) {
+
+        $lista_jogo = $this->core_model->get_all_jogo('jogo_football', array('match_league_id ' => $competicao));
+
+        $data = array(
+            'jogo' => $lista_jogo,
+        );
+
+        $this->load->view('football/jogo', $data);
+    }
+
+    public function tela_detalhe($jogo) {
+
+        $lista_detalhe = $this->core_model->get_all_jogo('jogo_football', array('match_id ' => $jogo));
+
+        $data = array(
+            'detalhe' => $lista_detalhe,
+        );
+
+        $this->load->view('football/detalhe', $data);
     }
 
 }

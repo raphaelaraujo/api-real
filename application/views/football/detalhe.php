@@ -37,10 +37,20 @@
                 <div class="main-content">
                     <section class="section">
                         <div class="section-body">
-                            <!-- add content here -->
-                            <h2>País</h2>
-                            <a href="<?php echo base_url('api_football/api_acao/tela_competicao/BR') ?>" class="btn btn-primary">Brasil</a>
-                            <a href="<?php echo base_url('api_football/api_acao/tela_competicao/IT') ?>" class="btn btn-primary">Itália</a>
+                            <!-- add content here --> 
+                            <?php foreach ($detalhe as $d) : ?> 
+                                <h5>Rodada: <?php echo $d->rodada ?>            </h5><br/>
+                                <h5>Mandante: <?php echo $d->home_team_name ?>  </h5><br/>
+                                <h5>Visitante: <?php echo $d->away_team_name ?> </h5><br/>
+                                <h5>Local: <?php echo $d->venue ?>              </h5><br/>
+                                <h5>Árbitro: <?php echo $d->referee ?>          </h5><br/>
+                                <h5>Data: <?php echo $d->event_date ?>          </h5><br/>
+                                <h5>Status: <?php echo $d->status ?>            </h5><br/>
+                                <h5>Primerio Tempo: <?php echo $d->half_time ?> </h5><br/>
+                                <h5>Final de Jogo: <?php echo $d->full_time ?>  </h5><br/>
+                                <h5>Prorrogação: <?php echo $d->extra_time ?>   </h5><br/>
+                                <h5>Penalti: <?php echo $d->penalty ?>          </h5><br/>
+                            <?php endforeach; ?>
                         </div>
                     </section>
                     <div class="settingSidebar">
