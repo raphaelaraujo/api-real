@@ -5,7 +5,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Api_acao extends CI_Controller {
 
     public function index() {
-        $this->load->view('football/index');
+
+        $lista_competicao = $this->core_model->get_group_football('competicao_football','country');
+
+        $data = array(
+            'competicao' => $lista_competicao,
+        );
+
+
+        $this->load->view('football/index', $data);
 //        $operacao = "fixtures/league/1396";
 //        $resposta = $this->api_model->executa_api_football($operacao);
 //        var_dump($resposta);
@@ -107,14 +115,14 @@ class Api_acao extends CI_Controller {
     }
 
     public function core_geral($league_id) {
-        
+
         $this->core_time($league_id);
         $this->core_jogos($league_id);
     }
 
     public function tela_competicao($pais) {
 
-        $lista_competicao = $this->core_model->get_all_football('competicao_football', array('country_code ' => $pais));
+        $lista_competicao = $this->core_model->get_all_football('competicao_football', array('country' => $pais));
 
         $data = array(
             'competicao' => $lista_competicao,

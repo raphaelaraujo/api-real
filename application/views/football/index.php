@@ -39,9 +39,9 @@
                         <div class="section-body">
                             <!-- add content here -->
                             <h2>País</h2>
-                            <a href="<?php echo base_url('api_football/api_acao/tela_competicao/BR') ?>" class="btn btn-primary">Brasil</a>
-                            <a href="<?php echo base_url('api_football/api_acao/tela_competicao/IT') ?>" class="btn btn-primary">Itália</a>
-                            <a href="<?php echo base_url('api_football/api_acao/tela_competicao/GB') ?>" class="btn btn-primary">Reino Unido</a>
+                            <?php foreach ($competicao as $c) : ?> 
+                                <a href="<?php echo base_url('api_football/api_acao/tela_competicao/' . $c->country) ?>" class="btn btn-primary"><?php echo trim($c->country) ?></a>                               
+                            <?php endforeach; ?>
                         </div>
                     </section>
                     <div class="settingSidebar">

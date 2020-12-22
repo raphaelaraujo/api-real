@@ -40,6 +40,18 @@ class Core_model extends CI_Model {
         }
     }
 
+    public function get_group_football($table = null, $group_field = null) {
+
+        if ($table && $this->db->table_exists($table)) {
+          
+            $this->db->group_by($group_field);
+
+            return $this->db->get($table)->result();
+        } else {
+            return false;
+        }
+    }
+
     public function get_all_in($table = null, $campo = null, $value = null, $order_field = null) {
 
         if ($table && $this->db->table_exists($table)) {

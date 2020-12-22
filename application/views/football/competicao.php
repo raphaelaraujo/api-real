@@ -46,6 +46,7 @@
                                                 <h4 style="text-align: center;"><?php echo trim($c->name) ?></h4>                                              
                                             </div>
                                             <div class="card-body">
+                                                <a href="<?php echo base_url('api_football/api_acao/core_geral/' . $c->league_id) ?>"><button type="button" class="btn btn-primary">Executar Cadastro</button></a>
                                                 <a href="<?php echo base_url('api_football/api_acao/tela_jogo/' . $c->league_id) ?>"><p align="center"> <img src="<?php echo $c->logo ?>"></p></a>
                                             </div>
                                         </div>
