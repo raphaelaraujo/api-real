@@ -6,8 +6,8 @@ class Core_model extends CI_Model {
 
     public function get_all_jogo($table = null, $condition = null) {
         $this->db->select('*'
-                . ',(select logo_team from time_football WHERE home_team_id = team_id and match_league_id = team_league_id) as logo_home_team'
-                . ',(select logo_team from time_football WHERE away_team_id = team_id and match_league_id = team_league_id) as logo_away_team'
+                . ',(select logo_team from time_football WHERE home_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_home_team'
+                . ',(select logo_team from time_football WHERE away_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_away_team'
                 . ',SUBSTRING(ROUND, 18, 2) AS rodada');
         $this->db->where($condition);
         return $this->db->get($table)->result();

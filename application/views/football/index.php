@@ -41,6 +41,7 @@
                             <h2>País</h2>
                             <a href="<?php echo base_url('api_football/api_acao/tela_competicao/BR') ?>" class="btn btn-primary">Brasil</a>
                             <a href="<?php echo base_url('api_football/api_acao/tela_competicao/IT') ?>" class="btn btn-primary">Itália</a>
+                            <a href="<?php echo base_url('api_football/api_acao/tela_competicao/GB') ?>" class="btn btn-primary">Reino Unido</a>
                         </div>
                     </section>
                     <div class="settingSidebar">
