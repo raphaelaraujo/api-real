@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/api-real/application/models/Core_model.php</file>
-            <file>file:/C:/xampp/htdocs/api-real/application/views/football/detalhe.php</file>
-            <file>file:/C:/xampp/htdocs/api-real/application/models/Api_model.php</file>
-            <file>file:/C:/xampp/htdocs/api-real/application/controllers/api_betfair/Api_acao.php</file>
-            <file>file:/C:/xampp/htdocs/api-real/application/views/football/index.php</file>
-            <file>file:/C:/xampp/htdocs/api-real/application/controllers/api_football/Api_acao.php</file>
+            <file>file:/C:/Users/admin/Desktop/php/htdocs/api-real/application/views/football/jogo.php</file>
+            <file>file:/C:/Users/admin/Desktop/php/htdocs/api-real/application/controllers/api_football/Api_acao.php</file>
+            <file>file:/C:/Users/admin/Desktop/php/htdocs/api-real/application/views/bet/index_layout_1.php</file>
+            <file>file:/C:/Users/admin/Desktop/php/htdocs/api-real/application/views/football/competicao.php</file>
         </group>
     </open-files>
 </project-private>

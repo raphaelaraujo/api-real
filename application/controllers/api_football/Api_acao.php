@@ -6,7 +6,7 @@ class Api_acao extends CI_Controller {
 
     public function index() {
 
-        $lista_competicao = $this->core_model->get_group_football('competicao_football','country');
+        $lista_competicao = $this->core_model->get_group_football('competicao_football', 'country');
 
         $data = array(
             'competicao' => $lista_competicao,
@@ -117,7 +117,7 @@ class Api_acao extends CI_Controller {
     public function core_geral($league_id) {
 
         $this->core_time($league_id);
-        $this->core_jogos($league_id);
+        $this->core_jogos($league_id);       
     }
 
     public function tela_competicao($pais) {
