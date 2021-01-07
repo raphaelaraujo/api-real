@@ -6,7 +6,11 @@ class Api_acao extends CI_Controller {
 
     public function index() {
 
+<<<<<<< HEAD
         $lista_competicao = $this->core_football_model->get_group_football('competicao_football', 'country');
+=======
+        $lista_competicao = $this->core_model->get_group_football('competicao_football', 'country');
+>>>>>>> 921e9bc8e1248e75f9d68e12cb4e79f1be679ec2
 
         $data = array(
             'competicao' => $lista_competicao,
