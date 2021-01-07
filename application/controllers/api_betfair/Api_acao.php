@@ -10,7 +10,7 @@ class Api_acao_1 extends CI_Controller {
 
     public function core_competicao() {
 
-        $this->core_model->delete_registros('competicoes');
+        $this->core_football_model->delete_registros('competicoes');
 
         $operacao = "listCompetitions";
         $parametro = '{"filter" : {
@@ -29,16 +29,16 @@ class Api_acao_1 extends CI_Controller {
             $data['regiao'] = $competicao->competitionRegion;
             $data['market_count'] = $competicao->marketCount;
 
-            $this->core_model->insert('competicoes', $data);
+            $this->core_football_model->insert('competicoes', $data);
 //} //fim do if
         }
     }
 
     public function core_evento() {
-        $this->core_model->delete_registros('eventos');
+        $this->core_football_model->delete_registros('eventos');
 
-        if ($this->core_model->get_all('competicoes')) {
-            $lista_competicao = $this->core_model->get_all('competicoes');
+        if ($this->core_football_model->get_all('competicoes')) {
+            $lista_competicao = $this->core_football_model->get_all('competicoes');
             $id_tratado = "";
 
             foreach ($lista_competicao as $competicao) {
@@ -76,7 +76,7 @@ class Api_acao_1 extends CI_Controller {
                 $data['data_evento'] = $evento->event->openDate;
                 $data['market_count_evento'] = $evento->marketCount;
 
-                $this->core_model->insert('eventos', $data);
+                $this->core_football_model->insert('eventos', $data);
             }
         } else {
             echo "Erro ->evento";
@@ -84,10 +84,10 @@ class Api_acao_1 extends CI_Controller {
     }
 
     public function core_mercado() {
-        if ($this->core_model->get_all('eventos') && $this->core_model->get_all('competicoes')) {
-            $lista_evento = $this->core_model->get_all('eventos');
-            $lista_competicao = $this->core_model->get_all('competicoes');
-//$this->core_model->delete_registros('mercado');
+        if ($this->core_football_model->get_all('eventos') && $this->core_football_model->get_all('competicoes')) {
+            $lista_evento = $this->core_football_model->get_all('eventos');
+            $lista_competicao = $this->core_football_model->get_all('competicoes');
+//$this->core_football_model->delete_registros('mercado');
 
             $id_evento_tratado = "";
 
@@ -122,7 +122,7 @@ class Api_acao_1 extends CI_Controller {
 
             foreach ($resposta[0]->result as $mercado) {
 
-                if (!$this->core_model->get_by_id('mercado', array('mercado_id' => $mercado->marketId))) {
+                if (!$this->core_football_model->get_by_id('mercado', array('mercado_id' => $mercado->marketId))) {
 
                     $data['mercado_id'] = $mercado->marketId;
                     $data['competicao_id'] = $mercado->competition->id;
@@ -132,7 +132,7 @@ class Api_acao_1 extends CI_Controller {
                     $data['timezone'] = $mercado->event->timezone;
                     $data['evento_data'] = date("d/m/Y H:i:s", strtotime($mercado->event->openDate));
 
-                    $this->core_model->insert('mercado', $data);
+                    $this->core_football_model->insert('mercado', $data);
                 }
             }
         } else {
@@ -142,15 +142,15 @@ class Api_acao_1 extends CI_Controller {
 
     public function core_odds() {
 
-//$lista_competicao = $this->core_model->get_all('competicoes');
-//$lista_mercado = $this->core_model->get_all('mercado');
+//$lista_competicao = $this->core_football_model->get_all('competicoes');
+//$lista_mercado = $this->core_football_model->get_all('mercado');
         if (
-                $this->core_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome') &&
-                $this->core_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'))
+                $this->core_football_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome') &&
+                $this->core_football_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'))
         ) {
 
-            $lista_competicao = $this->core_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome');
-            $lista_mercado = $this->core_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'));
+            $lista_competicao = $this->core_football_model->get_all_in('competicoes', 'id', array('13', '321319', '3172302'), 'nome');
+            $lista_mercado = $this->core_football_model->get_all_in('mercado', 'competicao_id', array('13', '321319', '3172302'));
 
 
             $id_mercado_tratado = "";

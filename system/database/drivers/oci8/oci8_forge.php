@@ -42,7 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @category	Database
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/userguide3/database/
+ * @link		https://codeigniter.com/user_guide/database/
  */
 class CI_DB_oci8_forge extends CI_DB_forge {
 
@@ -159,29 +159,7 @@ class CI_DB_oci8_forge extends CI_DB_forge {
 	 */
 	protected function _attr_auto_increment(&$attributes, &$field)
 	{
-		if ( ! empty($attributes['AUTO_INCREMENT']) && $attributes['AUTO_INCREMENT'] === TRUE && stripos($field['type'], 'number') !== FALSE && version_compare($this->db->version(), '12.1', '>='))
-		{
-			$field['auto_increment'] = ' GENERATED ALWAYS AS IDENTITY';
-		}
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Process column
-	 *
-	 * @param	array	$field
-	 * @return	string
-	 */
-	protected function _process_column($field)
-	{
-		return $this->db->escape_identifiers($field['name'])
-			.' '.$field['type'].$field['length']
-			.$field['unsigned']
-			.$field['default']
-			.$field['auto_increment']
-			.$field['null']
-			.$field['unique'];
+		// Not supported - sequences and triggers must be used instead
 	}
 
 	// --------------------------------------------------------------------

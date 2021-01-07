@@ -38,7 +38,7 @@ class Api_service extends CI_Controller {
 
         foreach ($respostaBook[0]->result as $mercadoBook) {
             $data_market[] = array(
-                'mercado' => $this->core_model->get_by_id('mercado', array('mercado_id' => $mercadoBook->marketId)),
+                'mercado' => $this->core_football_model->get_by_id('mercado', array('mercado_id' => $mercadoBook->marketId)),
                 'mandante_afavor' => isset($mercadoBook->runners[0]->ex->availableToBack[0]->price) ? $mercadoBook->runners[0]->ex->availableToBack[0]->price : '0.0',
                 'visitante_afavor' => isset($mercadoBook->runners[1]->ex->availableToBack[0]->price) ? $mercadoBook->runners[1]->ex->availableToBack[0]->price : '0.0',
                 'empate_afavor' => isset($mercadoBook->runners[2]->ex->availableToBack[0]->price) ? $mercadoBook->runners[2]->ex->availableToBack[0]->price : '0.0',

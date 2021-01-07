@@ -58,6 +58,8 @@ class Api_model extends CI_Model {
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0),
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0),
             CURLOPT_HTTPHEADER => array(
                 "x-rapidapi-host: api-football-v1.p.rapidapi.com",
                 "x-rapidapi-key: 6f5393819dmsh1f30076f07e26f9p152f89jsn9883399da3bb"

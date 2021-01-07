@@ -1,96 +1,89 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Consumir API Betfair</title>
-    </head>
-    <body>
-        <?php
-        $appKey = "ps7eHG6ouYq6Nc7l";
-        $sessionToken = "7mnqju8A6HglJqsU3Y0heGzqqb1o2QJ83Npjc4t2YhY=";
-        $url = "https://api.betfair.com/exchange/betting/json-rpc/v1";
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Welcome to CodeIgniter</title>
 
-        $operationCompetition = "listCompetitions";
-        $paramsCompetition = '{"filter" : {
-                                          "eventTypeIds" : ["1"],
-                                          "marketCountries": ["BR"]                                          
-                                          },
-                               "locale" : "pt"          
-                    }';
+	<style type="text/css">
 
-        $operationEvent = "listEvents";
-        $paramsEvent = '{"filter" : {
-                                    "eventTypeIds" : ["1"],
-                                    "marketCountries": ["BR"],
-                                    "competitionIds":["12184232,3583988,321319,12148223,12185075,13,1223583"]
-                                    },
-                         "locale" : "pt"      
-                    }';
+	::selection { background-color: #E13300; color: white; }
+	::-moz-selection { background-color: #E13300; color: white; }
 
-        $operationMarket = "listMarketCatalogue";
-        $paramsMarket = '{"filter" : {
-                                    "eventIds" : ["30171548"],
-                                    "marketCountries": ["BR"],
-                                    "marketTypeCodes": ["MATCH_ODDS"]
-                                     },
-                          "maxResults" : 10,
-                          "locale" : "pt"
-                    }';
+	body {
+		background-color: #fff;
+		margin: 40px;
+		font: 13px/20px normal Helvetica, Arial, sans-serif;
+		color: #4F5155;
+	}
 
-        $operationBook = "listMarketBook";
-        $paramsBook = '{
-                        "marketIds" : ["1.176232899"],
-                        "locale" : "pt"
-                       }';
+	a {
+		color: #003399;
+		background-color: transparent;
+		font-weight: normal;
+	}
 
+	h1 {
+		color: #444;
+		background-color: transparent;
+		border-bottom: 1px solid #D0D0D0;
+		font-size: 19px;
+		font-weight: normal;
+		margin: 0 0 14px 0;
+		padding: 14px 15px 10px 15px;
+	}
 
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        //curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:',
-            'X-Application: ' . $appKey,
-            'X-Authentication: ' . $sessionToken,
-            'Accept: application/json',
-            'Content-Type: application/json'
-        ));
+	code {
+		font-family: Consolas, Monaco, Courier New, Courier, monospace;
+		font-size: 12px;
+		background-color: #f9f9f9;
+		border: 1px solid #D0D0D0;
+		color: #002166;
+		display: block;
+		margin: 14px 0 14px 0;
+		padding: 12px 10px 12px 10px;
+	}
 
-        $postData = '[{ "jsonrpc": "2.0", "method": "SportsAPING/v1.0/' . $operationEvent . '", "params" :' . $paramsEvent . ', "id": 1}]';
+	#body {
+		margin: 0 15px 0 15px;
+	}
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+	p.footer {
+		text-align: right;
+		font-size: 11px;
+		border-top: 1px solid #D0D0D0;
+		line-height: 32px;
+		padding: 0 10px 0 10px;
+		margin: 20px 0 0 0;
+	}
 
-        $response = json_decode(curl_exec($ch));
-        //var_dump($response);
-        foreach ($response[0]->result as $evento) {
-            var_dump($evento);
-//            echo "<b>Preço(vitória mandante):</b> " . $evento->runners[0]->lastPriceTraded . "<br/>" . " | ";
-//            echo "<b>Preço(vitória visitante):</b> " . $evento->runners[1]->lastPriceTraded . "<br/>" . " | ";
-//            echo "<b>Preço(empate):</b> " . $evento->runners[2]->lastPriceTraded . "<br/>" . " | ";
-//            echo "<b>Nome Mercado:</b> " . $evento->marketName . "<br/>" . " | ";
-//            echo "<b>Qtd de mercados estão na comp: </b>" . $evento->marketCount ."<br/>". " | ";
-//            echo "<b>Região: </b>" . $evento->competitionRegion ."<br/>". " | ";
-            //echo "<hr>";
-        }
+	#container {
+		margin: 10px;
+		border: 1px solid #D0D0D0;
+		box-shadow: 0 0 8px #D0D0D0;
+	}
+	</style>
+</head>
+<body>
 
-        curl_close($ch);
+<div id="container">
+	<h1>Welcome to CodeIgniter!</h1>
 
+	<div id="body">
+		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 
+		<p>If you would like to edit this page you'll find it located at:</p>
+		<code>application/views/welcome_message.php</code>
 
-        if (isset($response[1]->error)) {
-            echo 'Call to api-ng failed: ' . "\n";
-            echo 'Response: ' . json_encode($response);
-            exit(-1);
-        } else {
-            //var_dump($response);
-            return $response;
-        }
-        ?>
-    </body>
+		<p>The corresponding controller for this page is found at:</p>
+		<code>application/controllers/Welcome.php</code>
+
+		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
+	</div>
+
+	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+</div>
+
+</body>
 </html>
